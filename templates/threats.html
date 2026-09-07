@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield | Threats</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <span class="shield">
+            🛡️
+        </span>
+
+        <span>
+            CyberShield
+        </span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/">
+            Dashboard
+        </a>
+
+        <a href="/threats" class="active">
+            Threats
+        </a>
+
+        <a href="/logs">
+            Logs
+        </a>
+
+        <a href="/incidents">
+            Incidents
+        </a>
+
+        <a href="/reports">
+            Reports
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="dashboard-container">
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                THREAT DETECTION
+            </p>
+
+            <h1>
+                Security Threats
+            </h1>
+
+            <p class="hero-description">
+
+                Monitor and analyze potentially malicious
+                security activities detected by CyberShield.
+
+            </p>
+
+        </div>
+
+
+        <div class="monitor-status">
+
+            <span class="status-dot"></span>
+
+            Threat Monitoring Active
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         THREAT SUMMARY
+    ================================================== -->
+
+    <section class="stats-grid">
+
+
+        <!-- TOTAL -->
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Total Threats
+            </div>
+
+            <div class="stat-value">
+                {{ threats|length }}
+            </div>
+
+            <div class="stat-description">
+                Detected threats
+            </div>
+
+        </div>
+
+
+
+        <!-- CRITICAL -->
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Critical Threats
+            </div>
+
+            <div class="stat-value">
+
+                {{ threats
+                   |selectattr("severity", "equalto", "CRITICAL")
+                   |list
+                   |length
+                }}
+
+            </div>
+
+            <div class="stat-description">
+                Requires immediate action
+            </div>
+
+        </div>
+
+
+
+        <!-- HIGH -->
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                High Risk
+            </div>
+
+            <div class="stat-value">
+
+                {{ threats
+                   |selectattr("severity", "equalto", "HIGH")
+                   |list
+                   |length
+                }}
+
+            </div>
+
+            <div class="stat-description">
+                High priority threats
+            </div>
+
+        </div>
+
+
+
+        <!-- MONITORING -->
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Monitoring
+            </div>
+
+            <div class="stat-value success">
+                ACTIVE
+            </div>
+
+            <div class="stat-description">
+                Detection engine running
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         DETECTED THREATS
+    ================================================== -->
+
+    <section class="activity-section">
+
+
+        <div class="section-header">
+
+            <h2>
+                Detected Threats
+            </h2>
+
+            <span class="live-monitoring">
+                Real-Time Monitoring
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             IF THREATS EXIST
+        ================================================== -->
+
+        {% if threats %}
+
+
+            {% for threat in threats %}
+
+
+            <div class="activity-item">
+
+
+                <!-- ICON -->
+
+                <div class="activity-icon info-icon">
+
+                    ⚠️
+
+                </div>
+
+
+
+                <!-- THREAT INFORMATION -->
+
+                <div class="activity-content">
+
+                    <h3>
+
+                        {{ threat["threat_type"] }}
+
+                    </h3>
+
+
+                    <p>
+
+                        <strong>
+                            Severity:
+                        </strong>
+
+                        {{ threat["severity"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        {{ threat["description"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Detected:
+                        </strong>
+
+                        {{ threat["detected_at"] }}
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        <!-- =================================================
+             NO THREATS
+        ================================================== -->
+
+        {% else %}
+
+
+            <div style="
+                padding: 50px;
+                text-align: center;
+            ">
+
+
+                <div style="
+                    font-size: 50px;
+                    margin-bottom: 18px;
+                ">
+
+                    🛡️
+
+                </div>
+
+
+                <h3 style="
+                    margin-bottom: 10px;
+                ">
+
+                    No Threats Detected
+
+                </h3>
+
+
+                <p style="
+                    color: #64748b;
+                    font-size: 14px;
+                ">
+
+                    CyberShield has not detected
+                    any suspicious security activity yet.
+
+                </p>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         THREAT ANALYSIS
+    ================================================== -->
+
+    <section class="quick-actions">
+
+
+        <h2>
+            Threat Analysis
+        </h2>
+
+
+        <div class="tools-grid">
+
+
+            <!-- TEST SCAN -->
+
+            <a href="/test-threat"
+               class="tool-card">
+
+
+                <div class="tool-icon">
+                    🔍
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Run Test Scan
+                    </h3>
+
+                    <p>
+                        Simulate a brute-force attack
+                        detection.
+                    </p>
+
+                </div>
+
+
+            </a>
+
+
+
+            <!-- LOGS -->
+
+            <a href="/logs"
+               class="tool-card">
+
+
+                <div class="tool-icon">
+                    📋
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Analyze Logs
+                    </h3>
+
+                    <p>
+                        Review system activity
+                        and security logs.
+                    </p>
+
+                </div>
+
+
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+
+        © 2026 CyberShield |
+        AI-Powered Cyber Security Platform
+
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

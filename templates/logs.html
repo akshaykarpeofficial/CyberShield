@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield | Security Logs</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <span class="shield">🛡️</span>
+
+        <span>CyberShield</span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/">
+            Dashboard
+        </a>
+
+        <a href="/threats">
+            Threats
+        </a>
+
+        <a href="/logs" class="active">
+            Logs
+        </a>
+
+        <a href="/incidents">
+            Incidents
+        </a>
+
+        <a href="/reports">
+            Reports
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="dashboard-container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                SECURITY MONITORING
+            </p>
+
+            <h1>
+                Security Logs
+            </h1>
+
+            <p class="hero-description">
+
+                Monitor system events and security activities
+                collected by CyberShield.
+
+            </p>
+
+        </div>
+
+
+        <div class="monitor-status">
+
+            <span class="status-dot"></span>
+
+            Log Monitoring Active
+
+        </div>
+
+    </section>
+
+
+
+    <!-- LOG SUMMARY -->
+
+    <section class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Total Logs
+            </div>
+
+            <div class="stat-value">
+                {{ logs|length }}
+            </div>
+
+            <div class="stat-description">
+                Security events
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Login Events
+            </div>
+
+            <div class="stat-value">
+                {{ logs|selectattr("event_type", "equalto", "login")|list|length }}
+            </div>
+
+            <div class="stat-description">
+                Authentication events
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Failed Events
+            </div>
+
+            <div class="stat-value">
+                {{ logs|selectattr("status", "equalto", "FAILED")|list|length }}
+            </div>
+
+            <div class="stat-description">
+                Failed security events
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Monitoring
+            </div>
+
+            <div class="stat-value success">
+                ACTIVE
+            </div>
+
+            <div class="stat-description">
+                Log collection running
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- LOGS -->
+
+    <section class="activity-section">
+
+
+        <div class="section-header">
+
+            <h2>
+                Recent Security Logs
+            </h2>
+
+            <span class="live-monitoring">
+                Live Monitoring
+            </span>
+
+        </div>
+
+
+        {% if logs %}
+
+
+            {% for log in logs %}
+
+            <div class="activity-item">
+
+                <div class="activity-icon info-icon">
+                    📋
+                </div>
+
+
+                <div class="activity-content">
+
+                    <h3>
+                        {{ log["event_type"] }}
+                    </h3>
+
+                    <p>
+                        IP Address:
+                        {{ log["ip_address"] }}
+                    </p>
+
+                    <p>
+                        Status:
+                        <strong>
+                            {{ log["status"] }}
+                        </strong>
+                    </p>
+
+                    <p>
+                        Time:
+                        {{ log["created_at"] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div style="
+                padding: 50px;
+                text-align: center;
+            ">
+
+                <div style="
+                    font-size: 50px;
+                    margin-bottom: 18px;
+                ">
+                    📋
+                </div>
+
+                <h3>
+                    No Security Logs
+                </h3>
+
+                <p style="
+                    color: #64748b;
+                    font-size: 14px;
+                    margin-top: 10px;
+                ">
+
+                    CyberShield has not received any
+                    security events yet.
+
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+
+    <!-- TEST EVENT -->
+
+    <section class="quick-actions">
+
+        <h2>
+            Security Monitoring
+        </h2>
+
+
+        <div class="tools-grid">
+
+
+            <a href="/test-log"
+               class="tool-card">
+
+                <div class="tool-icon">
+                    📋
+                </div>
+
+                <div>
+
+                    <h3>
+                        Generate Test Log
+                    </h3>
+
+                    <p>
+                        Create a sample security event
+                        for testing.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a href="/threats"
+               class="tool-card">
+
+                <div class="tool-icon">
+                    ⚠️
+                </div>
+
+                <div>
+
+                    <h3>
+                        View Threats
+                    </h3>
+
+                    <p>
+                        Analyze detected security threats.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 CyberShield |
+        AI-Powered Cyber Security Platform
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

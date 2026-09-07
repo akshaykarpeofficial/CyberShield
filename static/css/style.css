@@ -1,0 +1,590 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            #132b4f,
+            #07111f 45%,
+            #050b14
+        );
+
+    color: #ffffff;
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 65px;
+
+    background: rgba(8, 17, 31, 0.96);
+
+    border-bottom: 1px solid #24344d;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    letter-spacing: 0.3px;
+}
+
+.shield {
+    font-size: 27px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+}
+
+.nav-links a {
+    color: #9fb0c7;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD
+========================================================= */
+
+.dashboard-container {
+    max-width: 1375px;
+
+    margin: auto;
+
+    padding: 52px 50px 60px;
+}
+
+
+/* =========================================================
+   HERO SECTION
+========================================================= */
+
+.hero {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 45px;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.eyebrow {
+    color: #38bdf8;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 14px;
+}
+
+.hero h1 {
+    font-size: 40px;
+
+    line-height: 1.2;
+
+    margin-bottom: 16px;
+}
+
+.hero-description {
+    color: #8fa2bb;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MONITORING STATUS
+========================================================= */
+
+.monitor-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background: rgba(16, 185, 129, 0.08);
+
+    border: 1px solid rgba(16, 185, 129, 0.3);
+
+    padding: 12px 20px;
+
+    border-radius: 30px;
+
+    color: #6ee7b7;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    display: inline-block;
+
+    background: #10b981;
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 12px #10b981;
+}
+
+
+/* =========================================================
+   STATISTICS GRID
+========================================================= */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 32px;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.stat-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20, 35, 56, 0.96),
+            rgba(10, 21, 36, 0.96)
+        );
+
+    border: 1px solid #263a55;
+
+    border-radius: 14px;
+
+    padding: 26px;
+
+    min-height: 165px;
+
+    transition: 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #3b82f6;
+}
+
+.stat-title {
+    color: #8fa2bb;
+
+    font-size: 14px;
+
+    margin-bottom: 18px;
+}
+
+.stat-value {
+    color: #ffffff;
+
+    font-size: 35px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+.stat-value.success {
+    color: #22c55e;
+}
+
+.stat-description {
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ACTIVITY SECTION
+========================================================= */
+
+.activity-section {
+    background: rgba(12, 25, 42, 0.92);
+
+    border: 1px solid #263a55;
+
+    border-radius: 14px;
+
+    margin-bottom: 30px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 23px 28px;
+
+    border-bottom: 1px solid #22334b;
+}
+
+.section-header h2 {
+    font-size: 19px;
+}
+
+.live-monitoring {
+    color: #38bdf8;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   ACTIVITY ITEM
+========================================================= */
+
+.activity-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 21px 28px;
+
+    border-bottom: 1px solid #1b2b41;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   ACTIVITY ICON
+========================================================= */
+
+.activity-icon {
+    width: 36px;
+
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-weight: bold;
+
+    font-size: 18px;
+}
+
+.success-icon {
+    background: rgba(34, 197, 94, 0.12);
+
+    color: #4ade80;
+}
+
+.info-icon {
+    background: rgba(56, 189, 248, 0.12);
+
+    color: #38bdf8;
+}
+
+
+/* =========================================================
+   ACTIVITY CONTENT
+========================================================= */
+
+.activity-content h3 {
+    font-size: 14px;
+
+    margin-bottom: 6px;
+}
+
+.activity-content p {
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SECURITY TOOLS
+========================================================= */
+
+.quick-actions {
+    margin-top: 30px;
+}
+
+.quick-actions h2 {
+    font-size: 20px;
+
+    margin-bottom: 18px;
+}
+
+.tools-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+}
+
+.tool-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 36, 60, 0.95),
+            rgba(10, 23, 39, 0.95)
+        );
+
+    border: 1px solid #263a55;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    color: #ffffff;
+
+    transition: 0.3s;
+}
+
+.tool-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #3b82f6;
+
+    background: #142b48;
+}
+
+.tool-icon {
+    font-size: 25px;
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(56, 189, 248, 0.08);
+
+    border-radius: 10px;
+}
+
+.tool-card h3 {
+    font-size: 14px;
+
+    margin-bottom: 6px;
+}
+
+.tool-card p {
+    color: #71839a;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 25px;
+
+    border-top: 1px solid #1b2b41;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .navbar {
+        padding: 0 30px;
+    }
+
+    .dashboard-container {
+        padding: 40px 30px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero {
+        gap: 30px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .dashboard-container {
+        padding: 30px 20px;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 25px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .monitor-status {
+        font-size: 12px;
+    }
+
+    .section-header {
+        padding: 20px;
+    }
+
+    .activity-item {
+        padding: 18px 20px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .stat-value {
+        font-size: 30px;
+    }
+
+    .stat-card {
+        padding: 22px;
+    }
+
+}

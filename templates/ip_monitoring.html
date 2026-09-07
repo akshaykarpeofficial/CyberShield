@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield - IP Monitoring</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0b1220;
+            color: white;
+            min-height: 100vh;
+        }
+
+
+        /* =================================================
+           SIDEBAR
+        ================================================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 230px;
+            height: 100vh;
+
+            background: #111827;
+
+            padding: 25px 15px;
+        }
+
+        .logo {
+            text-align: center;
+
+            font-size: 24px;
+            font-weight: bold;
+
+            margin-bottom: 35px;
+        }
+
+        .logo span {
+            color: #00d4ff;
+        }
+
+        .menu a {
+            display: block;
+
+            text-decoration: none;
+
+            color: #cbd5e1;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 8px;
+        }
+
+        .menu a:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        .menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        .main {
+            margin-left: 230px;
+
+            padding: 40px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+        }
+
+        .header p {
+            color: #94a3b8;
+
+            margin-top: 8px;
+        }
+
+
+        /* =================================================
+           SUMMARY CARDS
+        ================================================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .card {
+
+            background: #111827;
+
+            border: 1px solid #1f2937;
+
+            border-radius: 12px;
+
+            padding: 25px;
+        }
+
+        .card h3 {
+
+            color: #94a3b8;
+
+            font-size: 15px;
+
+            margin-bottom: 12px;
+        }
+
+        .number {
+
+            font-size: 35px;
+
+            font-weight: bold;
+        }
+
+        .total {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .suspicious {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .blocked {
+            border-left: 4px solid #ef4444;
+        }
+
+
+        /* =================================================
+           IP TABLE SECTION
+        ================================================= */
+
+        .section {
+
+            background: #111827;
+
+            border: 1px solid #1f2937;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 21px;
+        }
+
+
+        /* =================================================
+           TEST BUTTON
+        ================================================= */
+
+        .test-button {
+
+            text-decoration: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+        }
+
+        .test-button:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* =================================================
+           TABLE
+        ================================================= */
+
+        .table-container {
+
+            overflow-x: auto;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+
+            text-align: left;
+
+            background: #0f172a;
+
+            color: #94a3b8;
+
+            padding: 15px;
+
+            font-size: 14px;
+        }
+
+        td {
+
+            padding: 15px;
+
+            border-bottom: 1px solid #1f2937;
+
+            color: #cbd5e1;
+        }
+
+        tr:hover {
+            background: #172033;
+        }
+
+
+        /* =================================================
+           STATUS BADGES
+        ================================================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .allowed {
+
+            background: #14532d;
+
+            color: #86efac;
+        }
+
+        .suspicious-status {
+
+            background: #78350f;
+
+            color: #fde68a;
+        }
+
+        .blocked-status {
+
+            background: #7f1d1d;
+
+            color: #fca5a5;
+        }
+
+
+        /* =================================================
+           THREAT LEVEL
+        ================================================= */
+
+        .level {
+
+            font-weight: bold;
+        }
+
+        .level-low {
+            color: #86efac;
+        }
+
+        .level-medium {
+            color: #fde68a;
+        }
+
+        .level-high {
+            color: #fca5a5;
+        }
+
+
+        /* =================================================
+           EMPTY MESSAGE
+        ================================================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 35px;
+
+            color: #64748b;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 900px) {
+
+            .cards {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+
+                width: 180px;
+            }
+
+            .main {
+
+                margin-left: 180px;
+
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        Cyber<span>Shield</span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <a href="/">
+            Dashboard
+        </a>
+
+        <a href="/threats">
+            Threats
+        </a>
+
+        <a href="/logs">
+            Security Logs
+        </a>
+
+        <a href="/incidents">
+            Incidents
+        </a>
+
+        <a href="/ip-monitoring"
+           class="active">
+
+            IP Monitoring
+
+        </a>
+
+        <a href="/reports">
+            Reports
+        </a>
+
+        <a href="/security-event">
+            Security Event
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<div class="main">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            🌐 IP-Based Monitoring
+        </h1>
+
+        <p>
+            Monitor IP addresses and identify suspicious
+            or blocked security activity.
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SUMMARY
+    ================================================= -->
+
+    <div class="cards">
+
+
+        <!-- TOTAL IPS -->
+
+        <div class="card total">
+
+            <h3>
+                Total Monitored IPs
+            </h3>
+
+            <div class="number">
+
+                {{ total_ips }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SUSPICIOUS IPS -->
+
+        <div class="card suspicious">
+
+            <h3>
+                Suspicious IPs
+            </h3>
+
+            <div class="number">
+
+                {{ suspicious_count }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BLOCKED IPS -->
+
+        <div class="card blocked">
+
+            <h3>
+                Blocked IPs
+            </h3>
+
+            <div class="number">
+
+                {{ blocked_count }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         IP MONITORING TABLE
+    ================================================= -->
+
+    <div class="section">
+
+
+        <div class="section-header">
+
+            <h2>
+                Monitored IP Addresses
+            </h2>
+
+
+            <a href="/test-ip"
+               class="test-button">
+
+                Test IP
+
+            </a>
+
+        </div>
+
+
+
+        <div class="table-container">
+
+
+            {% if ips %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            IP Address
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Threat Level
+                        </th>
+
+                        <th>
+                            Last Seen
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for ip in ips %}
+
+                    <tr>
+
+
+                        <!-- ID -->
+
+                        <td>
+
+                            {{ ip["id"] }}
+
+                        </td>
+
+
+
+                        <!-- IP -->
+
+                        <td>
+
+                            🌐
+
+                            <strong>
+
+                                {{ ip["ip_address"] }}
+
+                            </strong>
+
+                        </td>
+
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            {% if ip["status"] == "Allowed" %}
+
+                                <span class="status allowed">
+
+                                    🟢 Allowed
+
+                                </span>
+
+
+                            {% elif ip["status"] == "Suspicious" %}
+
+                                <span class="status suspicious-status">
+
+                                    🟠 Suspicious
+
+                                </span>
+
+
+                            {% elif ip["status"] == "Blocked" %}
+
+                                <span class="status blocked-status">
+
+                                    🔴 Blocked
+
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="status">
+
+                                    {{ ip["status"] }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+
+                        <!-- THREAT LEVEL -->
+
+                        <td>
+
+
+                            {% if ip["threat_level"] == "Low" %}
+
+                                <span class="level level-low">
+
+                                    LOW
+
+                                </span>
+
+
+                            {% elif ip["threat_level"] == "Medium" %}
+
+                                <span class="level level-medium">
+
+                                    MEDIUM
+
+                                </span>
+
+
+                            {% elif ip["threat_level"] == "High" %}
+
+                                <span class="level level-high">
+
+                                    HIGH
+
+                                </span>
+
+
+                            {% else %}
+
+                                {{ ip["threat_level"] }}
+
+                            {% endif %}
+
+
+                        </td>
+
+
+
+                        <!-- LAST SEEN -->
+
+                        <td>
+
+                            {{ ip["last_seen"] }}
+
+                        </td>
+
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+
+            {% else %}
+
+
+            <div class="empty">
+
+                <h3>
+                    No IP addresses monitored yet.
+                </h3>
+
+                <p>
+                    Submit a Security Event or click
+                    "Test IP" to start monitoring.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SUSPICIOUS IPS
+    ================================================= -->
+
+    <div class="section">
+
+        <div class="section-header">
+
+            <h2>
+                🟠 Suspicious IP Addresses
+            </h2>
+
+        </div>
+
+
+        {% if suspicious_ips %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            IP Address
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Threat Level
+                        </th>
+
+                        <th>
+                            Last Seen
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for ip in suspicious_ips %}
+
+                    <tr>
+
+                        <td>
+
+                            {{ ip["ip_address"] }}
+
+                        </td>
+
+                        <td>
+
+                            <span class="status suspicious-status">
+
+                                🟠 Suspicious
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="level level-{{ ip['threat_level']|lower }}">
+
+                                {{ ip["threat_level"] }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            {{ ip["last_seen"] }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty">
+
+            No suspicious IP addresses detected.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- =================================================
+         BLOCKED IPS
+    ================================================= -->
+
+    <div class="section">
+
+        <div class="section-header">
+
+            <h2>
+                🔴 Blocked IP Addresses
+            </h2>
+
+        </div>
+
+
+        {% if blocked_ips %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            IP Address
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Threat Level
+                        </th>
+
+                        <th>
+                            Last Seen
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for ip in blocked_ips %}
+
+                    <tr>
+
+                        <td>
+
+                            {{ ip["ip_address"] }}
+
+                        </td>
+
+                        <td>
+
+                            <span class="status blocked-status">
+
+                                🔴 Blocked
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="level level-high">
+
+                                {{ ip["threat_level"] }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            {{ ip["last_seen"] }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty">
+
+            No blocked IP addresses detected.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

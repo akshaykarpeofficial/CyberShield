@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield - Security Event</title>
+
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        body {
+
+            background: #0b1220;
+
+            color: white;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =================================================
+           SIDEBAR
+        ================================================= */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            width: 230px;
+
+            height: 100vh;
+
+            background: #111827;
+
+            padding: 25px 15px;
+
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .logo span {
+
+            color: #00d4ff;
+
+        }
+
+
+        .menu a {
+
+            display: block;
+
+            text-decoration: none;
+
+            color: #cbd5e1;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 8px;
+
+        }
+
+
+        .menu a:hover {
+
+            background: #1e293b;
+
+            color: white;
+
+        }
+
+
+        .menu a.active {
+
+            background: #2563eb;
+
+            color: white;
+
+        }
+
+
+        /* =================================================
+           MAIN CONTENT
+        ================================================= */
+
+        .main {
+
+            margin-left: 230px;
+
+            padding: 40px;
+
+        }
+
+
+        .header {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 30px;
+
+        }
+
+
+        .header p {
+
+            color: #94a3b8;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* =================================================
+           EVENT BOX
+        ================================================= */
+
+        .event-box {
+
+            max-width: 750px;
+
+            background: #111827;
+
+            border: 1px solid #1f2937;
+
+            border-radius: 12px;
+
+            padding: 30px;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #cbd5e1;
+
+            font-weight: bold;
+
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 12px;
+
+            background: #0f172a;
+
+            border: 1px solid #374151;
+
+            border-radius: 7px;
+
+            color: white;
+
+            outline: none;
+
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color: #2563eb;
+
+        }
+
+
+        button {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+        }
+
+
+        button:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* =================================================
+           RESULT
+        ================================================= */
+
+        .result {
+
+            margin-top: 25px;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            background: #172033;
+
+            border: 1px solid #334155;
+
+        }
+
+
+        .result h2 {
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .result p {
+
+            margin: 10px 0;
+
+            color: #cbd5e1;
+
+        }
+
+
+        .result strong {
+
+            color: white;
+
+        }
+
+
+        .danger {
+
+            color: #fca5a5 !important;
+
+        }
+
+
+        .safe {
+
+            color: #86efac !important;
+
+        }
+
+
+        /* =================================================
+           THREAT DETAILS
+        ================================================= */
+
+        .threat-details {
+
+            margin-top: 15px;
+
+            padding: 15px;
+
+            background: #0f172a;
+
+            border-radius: 8px;
+
+        }
+
+
+        .threat-details p {
+
+            margin: 8px 0;
+
+        }
+
+
+        /* =================================================
+           NAVIGATION BUTTONS
+        ================================================= */
+
+        .navigation {
+
+            margin-top: 25px;
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .navigation a {
+
+            text-decoration: none;
+
+            color: white;
+
+            background: #1e293b;
+
+            border: 1px solid #334155;
+
+            padding: 10px 15px;
+
+            border-radius: 7px;
+
+        }
+
+
+        .navigation a:hover {
+
+            background: #334155;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+
+                width: 180px;
+
+            }
+
+
+            .main {
+
+                margin-left: 180px;
+
+                padding: 20px;
+
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                padding: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="sidebar">
+
+
+    <div class="logo">
+
+        Cyber<span>Shield</span>
+
+    </div>
+
+
+    <div class="menu">
+
+
+        <a href="/">
+
+            🏠 Dashboard
+
+        </a>
+
+
+        <a href="/threats">
+
+            🚨 Threats
+
+        </a>
+
+
+        <a href="/logs">
+
+            📋 Security Logs
+
+        </a>
+
+
+        <a href="/incidents">
+
+            ⚠️ Incidents
+
+        </a>
+
+
+        <a href="/ip-monitoring">
+
+            🌐 IP Monitoring
+
+        </a>
+
+
+        <a href="/reports">
+
+            📊 Reports
+
+        </a>
+
+
+        <a href="/security-event"
+           class="active">
+
+            🔍 Security Event
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<div class="main">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+
+    <div class="header">
+
+
+        <h1>
+
+            Security Event Monitoring
+
+        </h1>
+
+
+        <p>
+
+            Submit a security event for automatic
+            threat detection and IP monitoring.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         EVENT BOX
+    ================================================= -->
+
+    <div class="event-box">
+
+
+        <!-- =================================================
+             FORM
+        ================================================= -->
+
+        <form method="POST"
+              action="/security-event">
+
+
+            <!-- EVENT TYPE -->
+
+            <div class="form-group">
+
+
+                <label>
+
+                    Event Type
+
+                </label>
+
+
+                <select name="event_type"
+                        required>
+
+
+                    <option value="">
+
+                        Select Event
+
+                    </option>
+
+
+                    <option value="login">
+
+                        Login
+
+                    </option>
+
+
+                    <option value="suspicious_login">
+
+                        Suspicious Login
+
+                    </option>
+
+
+                    <option value="malware">
+
+                        Malware
+
+                    </option>
+
+
+                    <option value="sql_injection">
+
+                        SQL Injection
+
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- IP ADDRESS -->
+
+            <div class="form-group">
+
+
+                <label>
+
+                    IP Address
+
+                </label>
+
+
+                <input
+                    type="text"
+                    name="ip_address"
+                    placeholder="192.168.1.100"
+                    required
+                >
+
+
+            </div>
+
+
+
+            <!-- FAILED ATTEMPTS -->
+
+            <div class="form-group">
+
+
+                <label>
+
+                    Failed Login Attempts
+
+                </label>
+
+
+                <input
+                    type="number"
+                    name="failed_attempts"
+                    value="0"
+                    min="0"
+                    required
+                >
+
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+
+                <label>
+
+                    Status
+
+                </label>
+
+
+                <select name="status"
+                        required>
+
+
+                    <option value="SUCCESS">
+
+                        SUCCESS
+
+                    </option>
+
+
+                    <option value="FAILED">
+
+                        FAILED
+
+                    </option>
+
+
+                    <option value="SUSPICIOUS">
+
+                        SUSPICIOUS
+
+                    </option>
+
+
+                    <option value="BLOCKED">
+
+                        BLOCKED
+
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- SUBMIT -->
+
+            <button type="submit">
+
+                🛡️ Analyze Security Event
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- =================================================
+             DETECTION RESULT
+        ================================================= -->
+
+        {% if result %}
+
+
+        <div class="result">
+
+
+            <h2>
+
+                🔍 Detection Result
+
+            </h2>
+
+
+
+            {% if result["threat_type"] != "None" %}
+
+
+                <p class="danger">
+
+                    🚨
+
+                    <strong>
+
+                        Threat Detected
+
+                    </strong>
+
+                </p>
+
+
+                <div class="threat-details">
+
+
+                    <p>
+
+                        <strong>
+
+                            Threat Type:
+
+                        </strong>
+
+                        {{ result["threat_type"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            Severity:
+
+                        </strong>
+
+                        {{ result["severity"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            Description:
+
+                        </strong>
+
+                        {{ result["description"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            IP Address:
+
+                        </strong>
+
+                        {{ result["ip_address"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            Incident Status:
+
+                        </strong>
+
+                        OPEN
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            Detected At:
+
+                        </strong>
+
+                        {{ result["time"] }}
+
+                    </p>
+
+
+                </div>
+
+
+            {% else %}
+
+
+                <p class="safe">
+
+                    ✅
+
+                    <strong>
+
+                        No Threat Detected
+
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    Security activity appears normal.
+
+                </p>
+
+
+                <div class="threat-details">
+
+
+                    <p>
+
+                        <strong>
+
+                            IP Address:
+
+                        </strong>
+
+                        {{ result["ip_address"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            Event:
+
+                        </strong>
+
+                        {{ result["event_type"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            Status:
+
+                        </strong>
+
+                        {{ result["status"] }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+
+                            Checked At:
+
+                        </strong>
+
+                        {{ result["time"] }}
+
+                    </p>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             NAVIGATION
+        ================================================= -->
+
+        <div class="navigation">
+
+
+            <a href="/">
+
+                🏠 Dashboard
+
+            </a>
+
+
+            <a href="/logs">
+
+                📋 View Logs
+
+            </a>
+
+
+            <a href="/threats">
+
+                🚨 View Threats
+
+            </a>
+
+
+            <a href="/incidents">
+
+                ⚠️ View Incidents
+
+            </a>
+
+
+            <a href="/ip-monitoring">
+
+                🌐 View IP Monitoring
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

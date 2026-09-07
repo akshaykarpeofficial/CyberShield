@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #0f172a;
+
+            color: white;
+
+        }
+
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        .navbar {
+
+            background: #020617;
+
+            padding: 18px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+
+        .logo {
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .nav-links a {
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 8px 12px;
+
+            border-radius: 6px;
+
+        }
+
+
+        .nav-links a:hover {
+
+            background: #1e293b;
+
+        }
+
+
+        /* =================================================
+           CONTAINER
+        ================================================= */
+
+        .container {
+
+            padding: 30px;
+
+            max-width: 1400px;
+
+            margin: auto;
+
+        }
+
+
+        .title {
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .subtitle {
+
+            color: #94a3b8;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* =================================================
+           STATISTICS CARDS
+        ================================================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .card {
+
+            background: #1e293b;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            border: 1px solid #334155;
+
+        }
+
+
+        .card h3 {
+
+            margin-top: 0;
+
+            color: #94a3b8;
+
+            font-size: 15px;
+
+        }
+
+
+        .number {
+
+            font-size: 35px;
+
+            font-weight: bold;
+
+            margin-top: 10px;
+
+        }
+
+
+        .threat {
+
+            border-left: 4px solid #ef4444;
+
+        }
+
+
+        .high {
+
+            border-left: 4px solid #f59e0b;
+
+        }
+
+
+        .critical {
+
+            border-left: 4px solid #dc2626;
+
+        }
+
+
+        .ip {
+
+            border-left: 4px solid #3b82f6;
+
+        }
+
+
+        /* =================================================
+           GENERAL SECTION
+        ================================================= */
+
+        .section {
+
+            background: #1e293b;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            border: 1px solid #334155;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .section h2 {
+
+            margin-top: 0;
+
+        }
+
+
+        /* =================================================
+           SECURITY EVENT FORM
+        ================================================= */
+
+        .event-form {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .form-group label {
+
+            margin-bottom: 8px;
+
+            color: #cbd5e1;
+
+            font-weight: bold;
+
+        }
+
+
+        .form-group input,
+
+        .form-group select {
+
+            padding: 13px;
+
+            border-radius: 7px;
+
+            border: 1px solid #475569;
+
+            background: #0f172a;
+
+            color: white;
+
+            outline: none;
+
+        }
+
+
+        .form-group input:focus,
+
+        .form-group select:focus {
+
+            border-color: #3b82f6;
+
+        }
+
+
+        .submit-area {
+
+            grid-column: 1 / -1;
+
+        }
+
+
+        .submit-button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .submit-button:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        .form-note {
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            margin-top: 10px;
+
+        }
+
+
+        /* =================================================
+           RESULT
+        ================================================= */
+
+        .result {
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            background: #0f172a;
+
+            border: 1px solid #334155;
+
+        }
+
+
+        .result h3 {
+
+            margin-top: 0;
+
+        }
+
+
+        .result-row {
+
+            padding: 8px 0;
+
+            border-bottom: 1px solid #334155;
+
+        }
+
+
+        .result-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .critical-text {
+
+            color: #ef4444;
+
+            font-weight: bold;
+
+        }
+
+
+        .high-text {
+
+            color: #f59e0b;
+
+            font-weight: bold;
+
+        }
+
+
+        .medium-text {
+
+            color: #facc15;
+
+            font-weight: bold;
+
+        }
+
+
+        .low-text {
+
+            color: #22c55e;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================================
+           IP MONITORING
+        ================================================= */
+
+        .section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .view-button {
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+        }
+
+
+        .view-button:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        .ip-summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+        }
+
+
+        .ip-box {
+
+            background: #0f172a;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+        }
+
+
+        .ip-box h4 {
+
+            margin-top: 0;
+
+            color: #94a3b8;
+
+        }
+
+
+        .ip-number {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================================
+           QUICK ACTIONS
+        ================================================= */
+
+        .actions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+        }
+
+
+        .action {
+
+            background: #0f172a;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            border: 1px solid #334155;
+
+        }
+
+
+        .action:hover {
+
+            background: #334155;
+
+        }
+
+
+        /* =================================================
+           FOOTER
+        ================================================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: #64748b;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 1000px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+            .actions {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+            .event-form {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                flex-direction: column;
+
+                gap: 15px;
+
+            }
+
+            .nav-links {
+
+                justify-content: center;
+
+            }
+
+            .cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .ip-summary {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .actions {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .section-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        🛡️ CyberShield
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/">Dashboard</a>
+
+        <a href="/threats">Threats</a>
+
+        <a href="/logs">Logs</a>
+
+        <a href="/incidents">Incidents</a>
+
+        <a href="/ip-monitoring">IP Monitoring</a>
+
+        <a href="/reports">Reports</a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="container">
+
+
+    <h1 class="title">
+
+        Security Dashboard
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        CyberShield AI-Powered Cyber Security
+        Monitoring & Threat Detection Platform
+
+    </p>
+
+
+
+    <!-- =================================================
+         MAIN STATISTICS
+    ================================================= -->
+
+    <div class="cards">
+
+
+        <div class="card threat">
+
+            <h3>Total Threats</h3>
+
+            <div class="number">
+
+                {{ total_threats }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card high">
+
+            <h3>High Threats</h3>
+
+            <div class="number">
+
+                {{ high_threats }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card critical">
+
+            <h3>Critical Threats</h3>
+
+            <div class="number">
+
+                {{ critical_threats }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card ip">
+
+            <h3>Monitored IPs</h3>
+
+            <div class="number">
+
+                {{ total_ips }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         SECURITY EVENT INPUT
+    ================================================= -->
+
+    <div class="section">
+
+
+        <h2>
+
+            🔍 Security Event Monitoring
+
+        </h2>
+
+
+        <p class="subtitle">
+
+            Enter security event details to analyze
+            threats and monitor the IP address.
+
+        </p>
+
+
+        <form method="POST"
+              action="/security-event"
+              class="event-form">
+
+
+            <!-- =========================================
+                 EVENT TYPE
+            ========================================== -->
+
+            <div class="form-group">
+
+                <label for="event_type">
+
+                    Event Type
+
+                </label>
+
+
+                <select id="event_type"
+                        name="event_type"
+                        required>
+
+                    <option value="login">
+
+                        Login
+
+                    </option>
+
+                    <option value="suspicious_login">
+
+                        Suspicious Login
+
+                    </option>
+
+                    <option value="malware">
+
+                        Malware
+
+                    </option>
+
+                    <option value="sql_injection">
+
+                        SQL Injection
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 IP ADDRESS
+            ========================================== -->
+
+            <div class="form-group">
+
+                <label for="ip_address">
+
+                    IP Address
+
+                </label>
+
+
+                <input type="text"
+                       id="ip_address"
+                       name="ip_address"
+                       placeholder="192.168.1.100"
+                       required>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 FAILED ATTEMPTS
+            ========================================== -->
+
+            <div class="form-group">
+
+                <label for="failed_attempts">
+
+                    Failed Login Attempts
+
+                </label>
+
+
+                <input type="number"
+                       id="failed_attempts"
+                       name="failed_attempts"
+                       min="0"
+                       value="0"
+                       required>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 STATUS
+            ========================================== -->
+
+            <div class="form-group">
+
+                <label for="status">
+
+                    Event Status
+
+                </label>
+
+
+                <select id="status"
+                        name="status"
+                        required>
+
+                    <option value="SUCCESS">
+
+                        SUCCESS
+
+                    </option>
+
+                    <option value="FAILED">
+
+                        FAILED
+
+                    </option>
+
+                    <option value="SUSPICIOUS">
+
+                        SUSPICIOUS
+
+                    </option>
+
+                    <option value="BLOCKED">
+
+                        BLOCKED
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 SUBMIT
+            ========================================== -->
+
+            <div class="submit-area">
+
+                <button type="submit"
+                        class="submit-button">
+
+                    🛡️ Analyze Security Event
+
+                </button>
+
+
+                <div class="form-note">
+
+                    The event will be stored in Logs,
+                    analyzed for threats, and the IP will
+                    be added to IP Monitoring.
+
+                </div>
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- =================================================
+             RESULT
+        ================================================= -->
+
+        {% if result %}
+
+        <div class="result">
+
+            <h3>
+
+                🚨 Detection Result
+
+            </h3>
+
+
+            <div class="result-row">
+
+                <strong>Threat:</strong>
+
+                {{ result["threat_type"] }}
+
+            </div>
+
+
+            <div class="result-row">
+
+                <strong>Severity:</strong>
+
+                {% if result["severity"] == "CRITICAL" %}
+
+                    <span class="critical-text">
+
+                        {{ result["severity"] }}
+
+                    </span>
+
+                {% elif result["severity"] == "HIGH" %}
+
+                    <span class="high-text">
+
+                        {{ result["severity"] }}
+
+                    </span>
+
+                {% elif result["severity"] == "MEDIUM" %}
+
+                    <span class="medium-text">
+
+                        {{ result["severity"] }}
+
+                    </span>
+
+                {% else %}
+
+                    <span class="low-text">
+
+                        {{ result["severity"] }}
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="result-row">
+
+                <strong>Description:</strong>
+
+                {{ result["description"] }}
+
+            </div>
+
+
+            <div class="result-row">
+
+                <strong>Detected At:</strong>
+
+                {{ result["time"] }}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         IP MONITORING
+    ================================================= -->
+
+    <div class="section">
+
+
+        <div class="section-header">
+
+            <h2>
+
+                🌐 IP-Based Monitoring
+
+            </h2>
+
+
+            <a href="/ip-monitoring"
+               class="view-button">
+
+                View IP Monitoring
+
+            </a>
+
+        </div>
+
+
+        <div class="ip-summary">
+
+
+            <div class="ip-box">
+
+                <h4>
+
+                    Total IPs
+
+                </h4>
+
+                <div class="ip-number">
+
+                    {{ total_ips }}
+
+                </div>
+
+            </div>
+
+
+            <div class="ip-box">
+
+                <h4>
+
+                    Suspicious IPs
+
+                </h4>
+
+                <div class="ip-number">
+
+                    {{ suspicious_ip_count }}
+
+                </div>
+
+            </div>
+
+
+            <div class="ip-box">
+
+                <h4>
+
+                    Blocked IPs
+
+                </h4>
+
+                <div class="ip-number">
+
+                    {{ blocked_ip_count }}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SECURITY STATISTICS
+    ================================================= -->
+
+    <div class="section">
+
+
+        <h2>
+
+            📊 Security Statistics
+
+        </h2>
+
+
+        <div class="ip-summary">
+
+
+            <div class="ip-box">
+
+                <h4>
+
+                    Total Logs
+
+                </h4>
+
+                <div class="ip-number">
+
+                    {{ total_logs }}
+
+                </div>
+
+            </div>
+
+
+            <div class="ip-box">
+
+                <h4>
+
+                    Total Incidents
+
+                </h4>
+
+                <div class="ip-number">
+
+                    {{ total_incidents }}
+
+                </div>
+
+            </div>
+
+
+            <div class="ip-box">
+
+                <h4>
+
+                    System Status
+
+                </h4>
+
+                <div class="ip-number">
+
+                    🟢 Active
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         QUICK ACTIONS
+    ================================================= -->
+
+    <div class="section">
+
+
+        <h2>
+
+            ⚡ Quick Actions
+
+        </h2>
+
+
+        <div class="actions">
+
+
+            <a href="/test-threat"
+               class="action">
+
+                🚨 Test Threat
+
+            </a>
+
+
+            <a href="/test-ip"
+               class="action">
+
+                🌐 Test IP
+
+            </a>
+
+
+            <a href="/test-log"
+               class="action">
+
+                📋 Test Log
+
+            </a>
+
+
+            <a href="/test-incident"
+               class="action">
+
+                ⚠️ Test Incident
+
+            </a>
+
+
+            <a href="/threats"
+               class="action">
+
+                🔥 View Threats
+
+            </a>
+
+
+            <a href="/reports"
+               class="action">
+
+                📊 View Reports
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    CyberShield © 2026 |
+    AI-Powered Cyber Security Monitoring
+
+</footer>
+
+
+</body>
+
+</html>

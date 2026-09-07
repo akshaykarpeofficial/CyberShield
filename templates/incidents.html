@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield - Incidents</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0b1220;
+            color: white;
+            min-height: 100vh;
+        }
+
+
+        /* =================================================
+           SIDEBAR
+        ================================================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #111827;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .logo span {
+            color: #00d4ff;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: #cbd5e1;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+
+        .menu a:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        .menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+
+        /* =================================================
+           MAIN CONTENT
+        ================================================= */
+
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .test-btn {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 7px;
+        }
+
+        .test-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* =================================================
+           SUMMARY CARDS
+        ================================================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #111827;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #1f2937;
+        }
+
+        .card h3 {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .card .number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        /* =================================================
+           INCIDENT TABLE
+        ================================================= */
+
+        .incident-box {
+            background: #111827;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #1f2937;
+            overflow-x: auto;
+        }
+
+        .incident-box h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 14px;
+            border-bottom: 1px solid #374151;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px 14px;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        tr:hover {
+            background: #172033;
+        }
+
+
+        /* =================================================
+           SEVERITY
+        ================================================= */
+
+        .severity {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .critical {
+            background: #7f1d1d;
+            color: #fecaca;
+        }
+
+        .high {
+            background: #78350f;
+            color: #fed7aa;
+        }
+
+        .medium {
+            background: #713f12;
+            color: #fef08a;
+        }
+
+        .low {
+            background: #14532d;
+            color: #bbf7d0;
+        }
+
+
+        /* =================================================
+           STATUS
+        ================================================= */
+
+        .status {
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #172554;
+            color: #93c5fd;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        /* =================================================
+           STATUS UPDATE
+        ================================================= */
+
+        .status-form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .status-select {
+            background: #0b1220;
+            color: white;
+            border: 1px solid #374151;
+            border-radius: 6px;
+            padding: 8px;
+            outline: none;
+            font-size: 12px;
+        }
+
+        .update-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .update-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* =================================================
+           EMPTY STATE
+        ================================================= */
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        Cyber<span>Shield</span>
+    </div>
+
+
+    <div class="menu">
+
+        <a href="/">
+            Dashboard
+        </a>
+
+        <a href="/threats">
+            Threats
+        </a>
+
+        <a href="/logs">
+            Security Logs
+        </a>
+
+        <a href="/incidents"
+           class="active">
+            Incidents
+        </a>
+
+        <a href="/reports">
+            Reports
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>Security Incidents</h1>
+
+            <p>
+                Monitor and manage detected security incidents.
+            </p>
+
+        </div>
+
+
+        <a href="/test-incident"
+           class="test-btn">
+
+            + Test Incident
+
+        </a>
+
+    </div>
+
+
+    <!-- =================================================
+         SUMMARY CARDS
+    ================================================= -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>Total Incidents</h3>
+
+            <div class="number">
+
+                {{ incidents|length }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Open Incidents</h3>
+
+            <div class="number">
+
+                {{ incidents
+                   |selectattr("status", "equalto", "OPEN")
+                   |list
+                   |length }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Critical Incidents</h3>
+
+            <div class="number">
+
+                {{ incidents
+                   |selectattr("severity", "equalto", "CRITICAL")
+                   |list
+                   |length }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         INCIDENT TABLE
+    ================================================= -->
+
+    <div class="incident-box">
+
+        <h2>Incident Records</h2>
+
+
+        {% if incidents %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Incident Type</th>
+
+                    <th>Severity</th>
+
+                    <th>Description</th>
+
+                    <th>Current Status</th>
+
+                    <th>Update Status</th>
+
+                    <th>Created At</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for incident in incidents %}
+
+                <tr>
+
+                    <td>
+                        #{{ incident["id"] }}
+                    </td>
+
+
+                    <td>
+                        {{ incident["incident_type"] }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="severity
+                            {% if incident['severity'] == 'CRITICAL' %}
+                                critical
+                            {% elif incident['severity'] == 'HIGH' %}
+                                high
+                            {% elif incident['severity'] == 'MEDIUM' %}
+                                medium
+                            {% else %}
+                                low
+                            {% endif %}
+                        ">
+
+                            {{ incident["severity"] }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ incident["description"] }}
+                    </td>
+
+
+                    <!-- CURRENT STATUS -->
+
+                    <td>
+
+                        <span class="status">
+
+                            {{ incident["status"] }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- UPDATE STATUS -->
+
+                    <td>
+
+                        <form
+                            class="status-form"
+                            action="/update-incident/{{ incident['id'] }}"
+                            method="POST"
+                        >
+
+                            <select
+                                name="status"
+                                class="status-select"
+                            >
+
+                                <option value="OPEN"
+                                    {% if incident["status"] == "OPEN" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    OPEN
+                                </option>
+
+
+                                <option value="INVESTIGATING"
+                                    {% if incident["status"] == "INVESTIGATING" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    INVESTIGATING
+                                </option>
+
+
+                                <option value="RESOLVED"
+                                    {% if incident["status"] == "RESOLVED" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    RESOLVED
+                                </option>
+
+
+                                <option value="CLOSED"
+                                    {% if incident["status"] == "CLOSED" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    CLOSED
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                type="submit"
+                                class="update-btn"
+                            >
+                                Update
+                            </button>
+
+                        </form>
+
+                    </td>
+
+
+                    <td>
+                        {{ incident["created_at"] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+        <div class="empty">
+
+            <h3>No Security Incidents</h3>
+
+            <p>
+                No incidents have been detected yet.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

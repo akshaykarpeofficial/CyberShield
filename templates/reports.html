@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield - Reports</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #0b1220;
+            color: white;
+            min-height: 100vh;
+        }
+
+
+        /* =================================================
+           SIDEBAR
+        ================================================= */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            width: 230px;
+
+            height: 100vh;
+
+            background: #111827;
+
+            padding: 25px 15px;
+
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .logo span {
+
+            color: #00d4ff;
+
+        }
+
+
+        .menu a {
+
+            display: block;
+
+            text-decoration: none;
+
+            color: #cbd5e1;
+
+            padding: 13px 15px;
+
+            margin-bottom: 8px;
+
+            border-radius: 8px;
+
+        }
+
+
+        .menu a:hover {
+
+            background: #1e293b;
+
+            color: white;
+
+        }
+
+
+        .menu a.active {
+
+            background: #2563eb;
+
+            color: white;
+
+        }
+
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        .main {
+
+            margin-left: 230px;
+
+            padding: 35px;
+
+        }
+
+
+        .header {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 30px;
+
+        }
+
+
+        .header p {
+
+            color: #94a3b8;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* =================================================
+           REPORT CARDS
+        ================================================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .card {
+
+            background: #111827;
+
+            border: 1px solid #1f2937;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+        }
+
+
+        .card h3 {
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .number {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================================
+           REPORT BOX
+        ================================================= */
+
+        .report-box {
+
+            background: #111827;
+
+            border: 1px solid #1f2937;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .report-box h2 {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        th {
+
+            text-align: left;
+
+            color: #94a3b8;
+
+            padding: 13px;
+
+            border-bottom:
+                1px solid #374151;
+
+        }
+
+
+        td {
+
+            padding: 14px;
+
+            border-bottom:
+                1px solid #1f2937;
+
+        }
+
+
+        tr:hover {
+
+            background: #172033;
+
+        }
+
+
+        /* =================================================
+           BADGES
+        ================================================= */
+
+        .badge {
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+        }
+
+
+        .critical {
+
+            background: #7f1d1d;
+
+            color: #fecaca;
+
+        }
+
+
+        .high {
+
+            background: #78350f;
+
+            color: #fed7aa;
+
+        }
+
+
+        .medium {
+
+            background: #713f12;
+
+            color: #fef08a;
+
+        }
+
+
+        .low {
+
+            background: #14532d;
+
+            color: #bbf7d0;
+
+        }
+
+
+        .open {
+
+            background: #172554;
+
+            color: #93c5fd;
+
+        }
+
+
+        /* =================================================
+           SUMMARY
+        ================================================= */
+
+        .summary {
+
+            line-height: 1.8;
+
+            color: #cbd5e1;
+
+        }
+
+
+        .summary strong {
+
+            color: white;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 1100px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+
+                width: 180px;
+
+            }
+
+
+            .main {
+
+                margin-left: 180px;
+
+                padding: 20px;
+
+            }
+
+
+            .cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="sidebar">
+
+
+    <div class="logo">
+
+        Cyber<span>Shield</span>
+
+    </div>
+
+
+    <div class="menu">
+
+
+        <a href="/">
+            Dashboard
+        </a>
+
+
+        <a href="/threats">
+            Threats
+        </a>
+
+
+        <a href="/logs">
+            Security Logs
+        </a>
+
+
+        <a href="/incidents">
+            Incidents
+        </a>
+
+
+        <a href="/reports"
+           class="active">
+
+            Reports
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
+    <div class="header">
+
+        <h1>
+            Security Reports
+        </h1>
+
+
+        <p>
+            CyberShield security monitoring summary
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================= -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                TOTAL THREATS
+            </h3>
+
+            <div class="number">
+
+                {{ total_threats }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                CRITICAL THREATS
+            </h3>
+
+            <div class="number">
+
+                {{ critical_threats }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                HIGH THREATS
+            </h3>
+
+            <div class="number">
+
+                {{ high_threats }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                SECURITY LOGS
+            </h3>
+
+            <div class="number">
+
+                {{ total_logs }}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                INCIDENTS
+            </h3>
+
+            <div class="number">
+
+                {{ total_incidents }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         THREAT REPORT
+    ================================================= -->
+
+    <div class="report-box">
+
+
+        <h2>
+            Recent Threats
+        </h2>
+
+
+        {% if threats %}
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Threat
+                    </th>
+
+                    <th>
+                        Severity
+                    </th>
+
+                    <th>
+                        Description
+                    </th>
+
+                    <th>
+                        Detected At
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for threat in threats[:10] %}
+
+
+                <tr>
+
+
+                    <td>
+                        #{{ threat["id"] }}
+                    </td>
+
+
+                    <td>
+                        {{ threat["threat_type"] }}
+                    </td>
+
+
+                    <td>
+
+
+                        <span class="badge
+
+                        {% if threat['severity'] == 'CRITICAL' %}
+
+                            critical
+
+                        {% elif threat['severity'] == 'HIGH' %}
+
+                            high
+
+                        {% elif threat['severity'] == 'MEDIUM' %}
+
+                            medium
+
+                        {% else %}
+
+                            low
+
+                        {% endif %}
+
+                        ">
+
+                            {{ threat["severity"] }}
+
+                        </span>
+
+
+                    </td>
+
+
+                    <td>
+                        {{ threat["description"] }}
+                    </td>
+
+
+                    <td>
+                        {{ threat["detected_at"] }}
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+        {% else %}
+
+
+        <p class="summary">
+
+            No threats recorded yet.
+
+        </p>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         INCIDENT REPORT
+    ================================================= -->
+
+    <div class="report-box">
+
+
+        <h2>
+            Security Incidents
+        </h2>
+
+
+        {% if incidents %}
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Incident
+                    </th>
+
+                    <th>
+                        Severity
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Created At
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for incident in incidents[:10] %}
+
+
+                <tr>
+
+
+                    <td>
+                        #{{ incident["id"] }}
+                    </td>
+
+
+                    <td>
+                        {{ incident["incident_type"] }}
+                    </td>
+
+
+                    <td>
+
+
+                        <span class="badge
+
+                        {% if incident['severity'] == 'CRITICAL' %}
+
+                            critical
+
+                        {% elif incident['severity'] == 'HIGH' %}
+
+                            high
+
+                        {% elif incident['severity'] == 'MEDIUM' %}
+
+                            medium
+
+                        {% else %}
+
+                            low
+
+                        {% endif %}
+
+                        ">
+
+                            {{ incident["severity"] }}
+
+                        </span>
+
+
+                    </td>
+
+
+                    <td>
+
+
+                        <span class="badge open">
+
+                            {{ incident["status"] }}
+
+                        </span>
+
+
+                    </td>
+
+
+                    <td>
+                        {{ incident["created_at"] }}
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+        {% else %}
+
+
+        <p class="summary">
+
+            No security incidents recorded yet.
+
+        </p>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         SECURITY SUMMARY
+    ================================================= -->
+
+    <div class="report-box">
+
+
+        <h2>
+            Security Summary
+        </h2>
+
+
+        <p class="summary">
+
+            CyberShield has currently recorded
+
+            <strong>
+                {{ total_threats }}
+            </strong>
+
+            security threats,
+
+            <strong>
+                {{ total_incidents }}
+            </strong>
+
+            incidents and
+
+            <strong>
+                {{ total_logs }}
+            </strong>
+
+            security logs.
+
+
+            <br>
+
+
+            Critical threats detected:
+
+            <strong>
+                {{ critical_threats }}
+            </strong>
+
+
+            <br>
+
+
+            High severity threats detected:
+
+            <strong>
+                {{ high_threats }}
+            </strong>
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
